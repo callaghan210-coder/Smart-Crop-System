@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop Recommendation - Results</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .card-body {
+            font-size: 18px;
+        }
+
+        .recommendation {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .recommendation h4 {
+            color: #4CAF50;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .result-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .result-list li {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .result-list li img {
+            margin-right: 15px;
+        }
+
+        .result-list li h5 {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>Smart Crop Recommendation</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="text-center">Based on the conditions you entered, the most suitable crops are:</h5>
+
+                <div id="prediction" class="recommendation">
+                    <!-- Result will be displayed here dynamically -->
+                    <h4>Loading...</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Fetch the result from Flask and display it
+        fetch('/predict', {
+            method: 'POST',
+            body: new FormData(document.getElementById('predict-form'))
+        })
+        .then(response => response.json())
+        .then(data => {
+            const crops = data.recommended_crops;
+
+            // Update the result on the page
+            const resultContainer = document.getElementById('prediction');
+            resultContainer.innerHTML = `
+                <h4>Top 3 Recommended Crops:</h4>
+                <ul class="result-list">
+                    <li>
+                        <img src="path_to_icons/rice.png" alt="Rice" class="icon">
+                        <h5>Rice</h5>
+                    </li>
+                    <li>
+                        <img src="path_to_icons/wheat.png" alt="Wheat" class="icon">
+                        <h5>Wheat</h5>
+                    </li>
+                    <li>
+                        <img src="path_to_icons/maize.png" alt="Maize" class="icon">
+                        <h5>Maize</h5>
+                    </li>
+                </ul>
+            `;
+        })
+        .catch(error => {
+            document.getElementById('prediction').innerHTML = 'Error fetching the result.';
+            console.error('Error:', error);
+        });
+    </script>
+</body>
+
+</html>
