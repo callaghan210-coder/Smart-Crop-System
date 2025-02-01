@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation History</title>
+</head>
+<body>
+    <h1>Recommendation History</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nitrogen</th>
+                <th>Phosphorus</th>
+                <th>Potassium</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>pH</th>
+                <th>Rainfall</th>
+                <th>Recommended Crop</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rec in recommendations %}
+                <tr>
+                    <td>{{ rec.id }}</td>
+                    <td>{{ rec.nitrogen }}</td>
+                    <td>{{ rec.phosphorus }}</td>
+                    <td>{{ rec.potassium }}</td>
+                    <td>{{ rec.temperature }}</td>
+                    <td>{{ rec.humidity }}</td>
+                    <td>{{ rec.ph }}</td>
+                    <td>{{ rec.rainfall }}</td>
+                    <td>{{ rec.recommended_crop }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
